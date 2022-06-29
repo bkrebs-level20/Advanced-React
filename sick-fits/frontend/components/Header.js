@@ -16,6 +16,7 @@ const Logo = styled.h1`
     padding: 0.5rem 1rem;
   }
 `;
+
 const HeaderStyles = styled.header`
   .bar {
     border-bottom: 10px solid var(--black, black);
