@@ -6,6 +6,7 @@ import {
     statelessSessions,
 } from '@keystone-next/keystone/session';
 import { User } from './schemas/User';
+import { Product } from './schemas/Product';
 
 const databaseURL =
     process.env.DATABASE_URL || 'mongodb://localhost/keystone-sick-fits-tutorial';
@@ -43,6 +44,7 @@ export default withAuth(
         // data types are called lists.
         lists: createSchema({
             User,
+            Product,
             // Schema items go in here.
         }),
         // do we want people to be able to use the UI for Keystone?
