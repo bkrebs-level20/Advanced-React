@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/indent */
+/* eslint-disable prettier/prettier */
 import { text, password, relationship } from '@keystone-next/fields';
 import { list } from '@keystone-next/keystone/schema';
 

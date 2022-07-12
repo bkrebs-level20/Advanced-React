@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/indent */
+/* eslint-disable prettier/prettier */
 import { integer, select, text } from '@keystone-next/fields';
 import { list } from '@keystone-next/keystone/schema';
 
