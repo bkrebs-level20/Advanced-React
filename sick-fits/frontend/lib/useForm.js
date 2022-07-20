@@ -17,14 +17,13 @@ export default function useForm(initial = {}) {
     if (type === 'number') {
       value = parseInt(value);
     }
-    // file uploads need this... nost exactly sure why.
     if (type === 'file') {
-      value[0] = e.target.files;
+      [value] = e.target.files;
     }
     setInputs({
       // copy the existing state
       ...inputs,
-      [e.target.name]: e.target.value,
+      [name]: value,
     });
   }
 
