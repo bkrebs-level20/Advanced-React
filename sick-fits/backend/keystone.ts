@@ -2,7 +2,7 @@
 /* eslint-disable prettier/prettier */
 import { createAuth } from '@keystone-next/auth';
 import { config, createSchema } from '@keystone-next/keystone/schema';
-import 'dotenv/config'; // this will improt all the environmental variables into the file.
+import 'dotenv/config'; // this will import all the environmental variables into the file.
 import {
     withItemData,
     statelessSessions,
