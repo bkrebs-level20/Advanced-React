@@ -1,8 +1,9 @@
 import gql from 'graphql-tag';
-import useMutation from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import useForm from '../lib/useForm';
 import Form from './styles/Form';
 import DisplayError from './ErrorMessage';
+import { ALL_PRODUCTS_QUERY } from './Products';
 
 // make this a flexibile mutation, so we can pass variables.
 const CREATE_PRODUCT_MUTATION = gql`
@@ -46,6 +47,7 @@ export default function CreateProduct() {
     CREATE_PRODUCT_MUTATION,
     {
       variables: inputs,
+      refetchQueries: [{ query: ALL_PRODUCTS_QUERY }],
     }
   );
   return (
@@ -54,12 +56,12 @@ export default function CreateProduct() {
         e.preventDefault();
         console.log(inputs);
         // submit the inputfields to the backend:
-        const res = await createProduct();
-        console.log(res);
+        await createProduct();
+        clearForm();
       }}
     >
       <DisplayError />
-      <fieldset disabeld={loading} aria-busy={loading}>
+      <fieldset disabled={loading} aria-busy={loading}>
         <label htmlFor="image">
           Image
           <input
