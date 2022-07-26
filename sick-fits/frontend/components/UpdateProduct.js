@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from '@apollo/client';
 import gql from 'graphql-tag';
-import DisplayError from './ErrorMessage';
 import useForm from '../lib/useForm';
+import DisplayError from './ErrorMessage';
 import Form from './styles/Form';
 
 const UPDATE_PRODUCT_MUTATION = gql`
@@ -13,7 +13,7 @@ const UPDATE_PRODUCT_MUTATION = gql`
   ) {
     updateProduct(
       id: $id
-      data: { id: $id, name: $name, description: $description, price: $price }
+      data: { name: $name, description: $description, price: $price }
     ) {
       id
       name
@@ -40,19 +40,15 @@ export default function UpdateProduct({ id }) {
   const { data, error, loading } = useQuery(SINGLE_PRODUCT_QUERY, {
     variables: { id },
   });
-  if (loading) return <p>loading...</p>;
   // 2. we need to get the mutation to update the product.
   const [
     updateProduct,
     { data: updateData, error: updateError, loading: updateLoading },
-  ] = useMutation(UPDATE_PRODUCT_MUTATION, {
-    variables: {
-      id,
-      // TODO: Pass updates to prodcut here!
-    },
-  });
+  ] = useMutation(UPDATE_PRODUCT_MUTATION);
   // 2.5 Create some state for the form inputs:
-  const { inputs, handleChange, clearForm, resetForm } = useForm({ data.Product });
+  const { inputs, handleChange, clearForm, resetForm } = useForm(data?.Product);
+  console.log(inputs);
+  if (loading) return <p>loading...</p>;
   // 3. we need the form to handle the updates.
   // We're going to copy/paste from CreateProduct as it's very similar.
 
@@ -72,7 +68,20 @@ export default function UpdateProduct({ id }) {
   //   });
   // }}
   return (
-    <Form>
+    <Form
+      onSubmit={async (e) => {
+        e.preventDefault();
+        const res = await updateProduct({
+          variables: {
+            id,
+            name: inputs.name,
+            description: inputs.description,
+            price: inputs.price,
+          },
+        }).catch(console.error);
+        console.log(res);
+      }}
+    >
       <DisplayError error={error || updateError} />
       <fieldset disabled={updateLoading} aria-busy={updateLoading}>
         <label htmlFor="name">
